@@ -1,0 +1,4 @@
+name: CrossChat
+main: org.plugin.crosschat.CrossChat
+version: 1.0
+author: ice

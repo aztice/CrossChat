@@ -1,0 +1,12 @@
+# 本服务器名称，会作为前缀
+server-name: "YourServer"
+
+# server 或 client
+mode: "server"
+
+# server 模式下监听的端口
+listen-port: 20360
+
+# client 模式下要连接的服务器
+remote-host: "127.0.0.1"
+remote-port: 20370
