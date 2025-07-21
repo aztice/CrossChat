@@ -1,0 +1,34 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ main ] # 当代码推送到 main 分支时触发
+  pull_request:
+    branches: [ main ] # 当有拉取请求到 main 分支时触发
+  workflow_dispatch: # 添加手动触发按钮
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # 使用最新的 Ubuntu 运行器
+
+    steps:
+    - name: Checkout code # 步骤1: 检出代码
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 8 # 步骤2: 设置 Java Development Kit (JDK) 为 8
+      uses: actions/setup-java@v4
+      with:
+        java-version: '8' # 指定 Java 版本为 8
+        distribution: 'temurin' # 推荐使用 Temurin 发行版
+        cache: 'maven' # 缓存 Maven 依赖，加速后续构建
+
+    - name: Build with Maven # 步骤3: 使用 Maven 进行编译和打包
+      run: mvn -B clean package # -B 表示非交互模式，clean 清理旧的构建，package 打包项目
+
+    - name: Upload artifact # 步骤4: 上传编译好的 JAR 文件作为工作流产物
+      uses: actions/upload-artifact@v4
+      with:
+        name: CrossChat-jar # 产物的名称
+        path: target/*.jar # 指定要上传的文件路径，这里假设 JAR 文件在 target 目录下
+        # 如果你的 JAR 文件名不是固定的，或者有多个，你可能需要更精确的路径，例如：
+        # path: target/CrossChat-1.0-SNAPSHOT.jar
